@@ -1,5 +1,6 @@
 <?php
 require_once "app/view/admin.view.php";
+require_once "app/view/edit.view.php";
 require_once "app/model/movies.model.php";
 require_once "app/model/genres.model.php";
 class AdminController extends SecuredController{
@@ -12,6 +13,7 @@ class AdminController extends SecuredController{
         $this->adminView = new AdminView();
         $this->moviesModel = new MoviesModel();
         $this->genresModel = new GenresModel();
+        $this->editView = new EditView();
     }
 
     function showForm(){
@@ -79,7 +81,30 @@ class AdminController extends SecuredController{
 
     function editMovie($id) {
         $intId = intval($id[0], $base = 10);
-        $this->moviesModel->editMovie($intId);
+        $movie = $this->moviesModel->getById($intId);
+        $genres = $this->genresModel->getAll();
+        var_dump($movie);
+        $this->editView->showForm($intId, $movie->title, $movie->year_movie, $movie->producer, $movie->synopsis, $movie->duration, $movie->url_image, $movie->id_genre_fk, $genres);
+
+    }
+
+    function updateMovie() {
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $year = $_POST['year'];
+        $producer = $_POST['producer'];
+        $synopsis = $_POST['synopsis'];
+        $duration = $_POST['duration'];
+
+        var_dump($title);
+        $img = $_FILES['image'];
+        $url = ("images/movies/".$img['name']);
+        $this->saveImg($img, $url);
+
+        $id_genre_fk = $_POST['id_genre_fk'];
+
+        $this->moviesModel->update($id, $title, $year, $producer, $synopsis, $duration, $url, $id_genre_fk);
+        
     }
 
     function saveImg($img, $destino){

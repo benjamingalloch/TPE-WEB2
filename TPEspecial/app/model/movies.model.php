@@ -50,7 +50,9 @@ class MoviesModel extends Model {
         $query->execute();
     }
 
-    function editMovie() {
-
+    function update($id, $title, $year_movie, $producer, $synopsis, $duration, $url_image, $id_genre_fk) {
+        $db = $this->connect();
+        $query = $db->prepare("UPDATE movie SET title=$title, year_movie=$year_movie, producer=$producer, synopsis=$synopsis, duration=$duration, url_image=$url_image, id_genre_fk=$id_genre_fk  WHERE id = $id");
+        $query->execute();
     }
 }

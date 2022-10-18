@@ -17,7 +17,8 @@ class ConfigApp {
         'addGenre' => 'adminController#addGenre',
         'deleteMovie' => 'adminController#deleteMovie',
         'deleteGenre' => 'adminController#deleteGenre',
-        'editMovie' => 'adminController#editMovie'
+        'editMovie' => 'adminController#editMovie',
+        'updateMovie' => 'adminController#updateMovie'
     ];
 
 
